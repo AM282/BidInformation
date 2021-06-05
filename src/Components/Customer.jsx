@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { usePagination, useSortBy, useTable } from 'react-table';
 import BidColumn from './BidColumn';
+import CustomerProfile from './CustomerProfile';
 import DisplayCustomers from './DisplayCustomers';
 
 const Customer = () => {
@@ -24,31 +25,9 @@ const Customer = () => {
         });
 
     },[]);
-    let getData = ()=>{
-        return customers.map(customer =>{
-            let temp=Object.assign({},customer);
-            let bids=temp.bids;
-            temp.bid=0;
-            temp.min=0;
-            if(toggler===true)
-            {
-                bids.map(bidd=>(
-                    temp.bid=Math.max(bidd.amount,temp.bid)
-                ))
-            }
-            else
-            {
-                bids.map(bidd=>(
-                    temp.bid=Math.min(bidd.amount,temp.bid)
-                ))
-            }
-
-            return temp;
-        })
-    }
-
+    
     const data=React.useMemo(()=>
-    getData(),[customers]);
+    customers,[customers]);
 
     const triggerToggle = () => {
         setToggler( !toggler );
@@ -56,11 +35,28 @@ const Customer = () => {
 
     const columns=React.useMemo(()=>[
         {
+            Header:'Unique ID',
+            columns:[
+                {
+                    Header:'ID',
+                    accessor:'id',
+                    Cell: ({ cell: { value } }) => {
+                        return (
+                            <a href={`/customer/${value}`}>{`${value}`}</a>
+                        );
+                    }
+
+                }
+
+            ]
+        },
+        {
             Header:'Name',
             columns:[
                 {
                     Header:'firstName',
                     accessor:'firstname'
+ 
                 },
                 {
                     Header:'lastName',
