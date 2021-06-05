@@ -25,9 +25,29 @@ const Customer = () => {
         });
 
     },[]);
-    
+    let getData=()=>{
+        return customers.map(customer=>{
+            var temp=Object.assign({},customer);
+            temp.bid=0;
+            let bids=temp.bids;
+            let max=0,min=0;
+            console.log(bids);
+            bids.map((bid)=>{
+                min=Math.min(min,bid.amount);
+                max=Math.max(max,bid.amount);
+            })
+            if(toggler===true)
+            {
+                temp.bid=max;
+            }
+            else
+                temp.bid=min;
+            return temp;
+
+        })
+    }
     const data=React.useMemo(()=>
-    customers,[customers]);
+    getData(),[customers]);
 
     const triggerToggle = () => {
         setToggler( !toggler );
@@ -92,10 +112,8 @@ const Customer = () => {
             columns:[
                 {
                     Header:'Max/Min Bid',
-                    id:'bids',
-                    accessor:'bids',
-                    sortType:'alphanumeric',
-                    Cell: ({ cell: { value } }) => <BidColumn values={value} />
+                    accessor:'bid',
+                    sortType:'alphanumeric'
                 }
             ]
         }

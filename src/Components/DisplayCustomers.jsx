@@ -39,7 +39,7 @@ const DisplayCustomers = ({ columns, data }) => {
                                     <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                                         {column.render('Header')}
                                         <span>
-                                            {column.isSorted?(column.isSortedDesc?'d':'a'):''}
+                                            {column.isSorted?(column.isSortedDesc?'  DESC':'  ASC'):''}
                                         </span>
                                     </th>
                                 ))}
