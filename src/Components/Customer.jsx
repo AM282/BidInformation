@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { usePagination, useSortBy, useTable } from 'react-table';
+import BidColumn from './BidColumn';
 import DisplayCustomers from './DisplayCustomers';
 
 const Customer = () => {
@@ -67,7 +68,14 @@ const Customer = () => {
                 },
                 {
                     Header:'Avatar',
-                    accessor:'avatarUrl'
+                    accessor:'avatarUrl',
+                    Cell: ({ cell: { value } }) => {
+                        return (
+                          <>
+                          <img src={`${value}`}/>
+                          </>
+                        );
+                    }
                 }
             ],
         },
@@ -89,8 +97,9 @@ const Customer = () => {
                 {
                     Header:'Max/Min Bid',
                     id:'bids',
-                    accessor:'bid',
-                    sortType:'alphanumeric'
+                    accessor:'bids',
+                    sortType:'alphanumeric',
+                    Cell: ({ cell: { value } }) => <BidColumn values={value} />
                 }
             ]
         }
