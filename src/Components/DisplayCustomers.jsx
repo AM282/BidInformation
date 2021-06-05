@@ -47,7 +47,6 @@ const DisplayCustomers = ({ columns, data }) => {
                         ))}
                     </thead>
                     <tbody {...getTableBodyProps()}>
-
                             {page.map(row=>{
                                 prepareRow(row)
                             return (
