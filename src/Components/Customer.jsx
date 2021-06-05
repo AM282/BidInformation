@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useTable } from 'react-table';
+import { useSortBy, useTable } from 'react-table';
 import DisplayCustomers from './DisplayCustomers';
 
 const Customer = () => {
@@ -77,7 +77,8 @@ const Customer = () => {
                 {
                     Header:'Max/Min Bid',
                     id:'bids',
-                    accessor:'bid'
+                    accessor:'bid',
+                    sortType:'alphanumeric'
                 }
             ]
         }
@@ -88,7 +89,7 @@ const Customer = () => {
         headerGroups,
         rows,
         prepareRow
-    }=useTable({columns,data});
+    }=useTable({columns,data},useSortBy);
     return (
         <div className="container">
             <div className="row">
@@ -99,7 +100,12 @@ const Customer = () => {
                         {headerGroups.map(headerGroup=>(
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 {headerGroup.headers.map(column=>(
-                                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                        {column.render('Header')}
+                                        <span>
+                                            {column.isSorted?(column.isSortedDesc?'d':'a'):''}
+                                        </span>
+                                    </th>
                                 ))}
                             </tr>
                         ))}
